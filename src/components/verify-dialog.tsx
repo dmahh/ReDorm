@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useRef, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useRef, useState, type FormEvent, type ReactNode } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { GraduationCap, Loader2, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
@@ -93,7 +93,7 @@ function VerifyDialog({
 
   const emailTouchedInvalid = email.length > 3 && email.includes("@") && !isEduEmail(email);
 
-  async function submit(e: React.FormEvent) {
+  async function submit(e: FormEvent) {
     e.preventDefault();
     const parsed = verifySchema.safeParse({ name, email, dorm });
     if (!parsed.success) {
