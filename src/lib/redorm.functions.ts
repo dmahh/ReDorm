@@ -255,7 +255,7 @@ export const listInbox = createServerFn({ method: "POST" })
       admin.from("items").select("id, title, photos, seller_id").in("id", itemIds.length ? itemIds : ["00000000-0000-0000-0000-000000000000"]),
       admin.from("students").select("id, name, dorm").in("id", otherIds.length ? otherIds : ["00000000-0000-0000-0000-000000000000"]),
     ]);
-    const signed = await signPhotos(admin, (items ?? []).map((i) => i.photos[0]).filter(Boolean));
+    const signed = await signPhotos(admin, (items ?? []).map((i) => i.photos[0]).filter((p): p is string => !!p));
     const itemMap = new Map((items ?? []).map((i) => [i.id, i]));
     const otherMap = new Map((others ?? []).map((o) => [o.id, o]));
     return Array.from(latest.entries()).map(([, r]) => {

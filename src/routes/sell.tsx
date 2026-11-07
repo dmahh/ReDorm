@@ -39,6 +39,10 @@ export const Route = createFileRoute("/sell")({
   component: SellPage,
 });
 
+type SellErrors = Partial<
+  Record<"photos" | "title" | "description" | "category" | "condition" | "price" | "swapDetails" | "building", string>
+>;
+
 const STEPS = ["Photos", "Details", "Deal & pickup", "Review"] as const;
 
 type Draft = {
@@ -61,7 +65,7 @@ function SellPage() {
   const [step, setStep] = useState(0);
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<SellErrors>({});
   const [draft, setDraft] = useState<Draft>({
     title: "",
     description: "",
@@ -131,14 +135,14 @@ function SellPage() {
   }
 
   function validateStep(s: number): boolean {
-    const errs: Record<string, string> = {};
+    const errs: SellErrors = {};
     if (s === 0 && files.length === 0) errs.photos = "Add at least one photo";
     if (s >= 1) {
       const r = parsed();
       if (!r.success) {
         const fields = s === 1 ? ["title", "description", "category", "condition"] : ["price", "swapDetails", "building"];
         for (const i of r.error.issues) {
-          const f = String(i.path[0]);
+          const f = String(i.path[0]) as keyof SellErrors;
           if (fields.includes(f) && !errs[f]) errs[f] = i.message.startsWith("Invalid") ? "Required" : i.message;
         }
       }
@@ -391,7 +395,7 @@ function SellPage() {
   );
 }
 
-function Field({ label, error, children }: { label: string; error?: string; children: ReactNode }) {
+function Field({ label, error, children }: { label: string; error?: string | undefined; children: ReactNode }) {
   return (
     <div className="space-y-1.5">
       <Label>{label}</Label>

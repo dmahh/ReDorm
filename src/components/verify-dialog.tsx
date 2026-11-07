@@ -75,6 +75,8 @@ export function VerifyProvider({ children }: { children: ReactNode }) {
   );
 }
 
+type VErrors = Partial<Record<"name" | "email" | "dorm", string>>;
+
 function VerifyDialog({
   open,
   onOpenChange,
@@ -88,7 +90,7 @@ function VerifyDialog({
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [dorm, setDorm] = useState<string>("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<VErrors>({});
   const [busy, setBusy] = useState(false);
 
   const emailTouchedInvalid = email.length > 3 && email.includes("@") && !isEduEmail(email);
@@ -97,8 +99,8 @@ function VerifyDialog({
     e.preventDefault();
     const parsed = verifySchema.safeParse({ name, email, dorm });
     if (!parsed.success) {
-      const errs: Record<string, string> = {};
-      for (const i of parsed.error.issues) errs[String(i.path[0])] = i.message;
+      const errs: VErrors = {};
+      for (const i of parsed.error.issues) errs[String(i.path[0]) as keyof VErrors] = i.message;
       if (!dorm) errs.dorm = "Pick your dorm";
       setErrors(errs);
       return;

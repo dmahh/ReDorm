@@ -15,10 +15,10 @@ import { useVerify } from "@/components/verify-dialog";
 export type ChatTarget = {
   itemId: string;
   itemTitle: string;
-  itemPhoto?: string | null;
+  itemPhoto?: string | null | undefined;
   otherId: string;
   otherName: string;
-  otherDorm?: string;
+  otherDorm?: string | undefined;
 };
 
 export function ChatDialog({ target, onClose }: { target: ChatTarget | null; onClose: () => void }) {
