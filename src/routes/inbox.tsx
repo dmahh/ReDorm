@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
@@ -119,7 +119,7 @@ function InboxPage() {
   );
 }
 
-function Empty({ title, body, action }: { title: string; body: string; action: React.ReactNode }) {
+function Empty({ title, body, action }: { title: string; body: string; action: ReactNode }) {
   return (
     <div className="flex flex-col items-center px-6 py-14 text-center">
       <Inbox className="size-10 text-muted-foreground" />

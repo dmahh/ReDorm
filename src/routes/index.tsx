@@ -30,9 +30,9 @@ const STEPS = [
 ];
 
 const STATS = [
-  { value: "1,200+", label: "items rehomed" },
-  { value: "8 tons", label: "kept out of landfill" },
-  { value: "$40k", label: "saved by students" },
+  { value: "$0", label: "to join, list or chat" },
+  { value: ".edu", label: "verified students only" },
+  { value: "Down the hall", label: "pickup in your own building" },
 ];
 
 function Landing() {
