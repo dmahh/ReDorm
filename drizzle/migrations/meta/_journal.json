@@ -1,0 +1,20 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794058662850,
+      "tag": "0000_redorm_core",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794058813580,
+      "tag": "0001_item_photos_read_policy",
+      "breakpoints": true
+    }
+  ]
+}
