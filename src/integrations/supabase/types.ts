@@ -14,7 +14,154 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      items: {
+        Row: {
+          building: string
+          category: string
+          condition: string
+          created_at: string
+          description: string
+          id: string
+          photos: string[]
+          price: number | null
+          reserved: boolean
+          reserved_by: string | null
+          seller_dorm: string
+          seller_id: string
+          seller_name: string
+          swap_details: string | null
+          title: string
+          transaction_type: string
+        }
+        Insert: {
+          building: string
+          category: string
+          condition: string
+          created_at?: string
+          description: string
+          id?: string
+          photos?: string[]
+          price?: number | null
+          reserved?: boolean
+          reserved_by?: string | null
+          seller_dorm: string
+          seller_id: string
+          seller_name: string
+          swap_details?: string | null
+          title: string
+          transaction_type: string
+        }
+        Update: {
+          building?: string
+          category?: string
+          condition?: string
+          created_at?: string
+          description?: string
+          id?: string
+          photos?: string[]
+          price?: number | null
+          reserved?: boolean
+          reserved_by?: string | null
+          seller_dorm?: string
+          seller_id?: string
+          seller_name?: string
+          swap_details?: string | null
+          title?: string
+          transaction_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "items_reserved_by_fkey"
+            columns: ["reserved_by"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "items_seller_id_fkey"
+            columns: ["seller_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          content: string
+          created_at: string
+          id: string
+          item_id: string
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          id?: string
+          item_id: string
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          id?: string
+          item_id?: string
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "messages_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_recipient_id_fkey"
+            columns: ["recipient_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "messages_sender_id_fkey"
+            columns: ["sender_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      students: {
+        Row: {
+          created_at: string
+          dorm: string
+          email: string
+          id: string
+          name: string
+          token_hash: string | null
+        }
+        Insert: {
+          created_at?: string
+          dorm: string
+          email: string
+          id?: string
+          name: string
+          token_hash?: string | null
+        }
+        Update: {
+          created_at?: string
+          dorm?: string
+          email?: string
+          id?: string
+          name?: string
+          token_hash?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
