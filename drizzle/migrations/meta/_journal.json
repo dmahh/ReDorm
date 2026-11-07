@@ -15,6 +15,13 @@
       "when": 1794058813580,
       "tag": "0001_item_photos_read_policy",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794060646807,
+      "tag": "0002_qairu_email_domain",
+      "breakpoints": true
     }
   ]
 }
