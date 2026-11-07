@@ -28,3 +28,10 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules (ReDorm)
+
+- Student identity is a .edu email + device token (no Supabase Auth): `verifyStudent` issues a random token, stores only its SHA-256 hash on `students`, and every write/messaging server fn calls `requireStudent(session)` first. Why: MVP brief forbids full auth but writes still need a caller check.
+- `students` and `messages` have RLS with no policies; only server functions (admin client, after `requireStudent`) touch them. `items` is public-read via the publishable client. Why: keeps emails and chats out of the public API.
+- Listing photos live in the private `item-photos` bucket (public buckets are blocked in this workspace); uploads go through `createListing` (FormData) and reads use signed URLs. Seed photos are static files under `public/images/items/`.
+- Taxonomy, validation and feed filtering live in `src/lib/redorm.ts` (client-safe, unit-tested in `redorm.test.ts`).
