@@ -41,6 +41,13 @@ export function useStudent(): Stored | null | undefined {
   return useSyncExternalStore(subscribe, read, () => undefined);
 }
 
+/** Reads the latest verified session (safe inside callbacks that run right after verifying). */
+export function currentSession(): StudentSession {
+  const s = typeof window === "undefined" ? null : read();
+  if (!s) throw new Error("Please verify your student email again");
+  return toSession(s);
+}
+
 export function toSession(s: Stored): StudentSession {
   return { studentId: s.student.id, token: s.token };
 }

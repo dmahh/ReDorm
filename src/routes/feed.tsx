@@ -14,7 +14,7 @@ import { useVerify } from "@/components/verify-dialog";
 import { itemsQuery } from "@/lib/queries";
 import { toggleReserve } from "@/lib/redorm.functions";
 import { EMPTY_FILTERS, filterItems, type FeedFilters, type Item } from "@/lib/redorm";
-import { toSession, useStudent } from "@/lib/student-session";
+import { currentSession, useStudent } from "@/lib/student-session";
 
 export const Route = createFileRoute("/feed")({
   head: () => ({
@@ -60,7 +60,7 @@ function FeedPage() {
   const mutation = useMutation({
     mutationFn: async (item: Item) => {
       setReservingId(item.id);
-      return reserve({ data: { session: toSession(stored!), itemId: item.id } });
+      return reserve({ data: { session: currentSession(), itemId: item.id } });
     },
     onSuccess: (res, item) => {
       toast.success(res.reserved ? `Reserved “${item.title}”. Message the seller to arrange pickup.` : "Reservation released");
